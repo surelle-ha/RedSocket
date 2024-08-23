@@ -1,9 +1,10 @@
 {
-  "name": "rts-ws",
+  "name": "socketeer",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "npm install -g nodemon",
+    "serve": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,8 @@
     "express": "^4.19.2",
     "http": "^0.0.1-security",
     "redis": "^4.7.0",
-    "socket.io": "^4.7.5"
+    "rts-ws": "file:",
+    "socket.io": "^4.7.5",
+    "socketeer": "file:"
   }
 }
