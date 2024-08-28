@@ -7,9 +7,6 @@ const { Server } = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 
-app.set('view engine', 'ejs');
-app.set('views', './views');
-
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -18,7 +15,7 @@ const io = new Server(server, {
 });
 
 const client = redis.createClient();
-const subscriptions = new Map(); // Keeps track of active subscriptions for each client
+const subscriptions = new Map(); 
 
 const connectRedisClients = async () => {
   try {
@@ -78,19 +75,9 @@ const connectRedisClients = async () => {
   }
 };
 
-// Start Redis connection
 connectRedisClients();
 
-// Enable CORS for Express routes
 app.use(cors());
-
-// Serve a simple EJS template
-app.get('/', (req, res) => {
-  res.render('index', { message: 'Server is running' });
-});
-
-// Static files (if needed)
-app.use(express.static('public'));
 
 server.listen(4000, () => {
   console.log('Server is running on port 4000');

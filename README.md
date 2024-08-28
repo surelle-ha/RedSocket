@@ -5,7 +5,7 @@
 </div>
 
 <div align="center">
-	<h1 style="letter-spacing: 7px">ZENTINEL.JS</h1>
+	<h1 style="letter-spacing: 7px">SOCKETEER</h1>
 </div>
 
 Zentinel.JS is a backend boilerplate built on top of Express.JS, structured to mirror the Laravel directory format for a familiar setup. It includes Artisan-like commands called 'Zentinel' to streamline development tasks, offering a powerful toolset for efficient backend operations and seamless integration.
