@@ -8,6 +8,7 @@ import MainLayout from "@/layouts/MainLayout.vue";
 import AuthLayout from "@/layouts/AuthLayout.vue";
 import SettingsLayout from "@/layouts/SettingsLayout.vue";
 
+import InstallerView from "@/pages/Installer.vue";
 import LoginView from "@/pages/Login.vue";
 import RegisterView from "@/pages/Register.vue";
 import HomeView from "@/pages/Home.vue";
@@ -18,9 +19,15 @@ import GeneralView from "@/pages/General.vue";
 import SecurityView from "@/pages/Security.vue";
 import SupportView from "@/pages/Support.vue";
 import DeveloperView from "@/pages/Developer.vue";
+import { useValidateState } from "@/services/InstallerService";
 
 // Route guard to require a story to be initialized
 const requireAuth = async (to, from, next) => {
+	const router = useRouter();
+	const result = await useValidateState();
+	if (!result.connection) {
+		router.push({ name: "Installer" });
+	}
 	const authStore = useAuthStore();
 	if (!authStore.isAuthenticated || !(await useValidateToken(authStore.token)) || isTokenExpired(authStore.token)) {
 		if (to.name !== "Login") {
@@ -50,8 +57,12 @@ const requireAuth = async (to, from, next) => {
 };
 
 // Route guard to prevent access to Home when a story is initialized
-const requireNoAuth = (to, from, next) => {
+const requireNoAuth = async (to, from, next) => {
 	const router = useRouter();
+	const result = await useValidateState();
+	if (!result.connection) {
+		router.push({ name: "Installer" });
+	}
 	const authStore = useAuthStore();
 	if (authStore.isAuthenticated) {
 		router.push({ name: "Home" });
@@ -61,6 +72,19 @@ const requireNoAuth = (to, from, next) => {
 };
 
 const routes = [
+	{
+		path: "/starter",
+		name: "StarterLayout",
+		component: AuthLayout,
+		redirect: "/starter/installer",
+		children: [
+			{
+				path: "installer",
+				name: "Installer",
+				component: InstallerView
+			},
+		],
+	},
 	{
 		path: "/auth",
 		name: "AuthLayout",

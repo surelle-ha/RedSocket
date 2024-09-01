@@ -34,6 +34,7 @@ export const useRegister = async (data) => {
 		console.error("Data is missing for the registration process.");
 		return;
 	}
+    console.log(data)
 
 	try {
 		const response = await axios.post(

@@ -16,7 +16,7 @@ module.exports = {
 			},
 			middle_name: {
 				type: Sequelize.STRING,
-				allowNull: false,
+				allowNull: true,
 			},
 			last_name: {
 				type: Sequelize.STRING,
