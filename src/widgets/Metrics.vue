@@ -6,6 +6,44 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { getEventChannels, getEventCount, useCreateEvent, useSocketEngine } from "@/services/EventService";
+import { onMounted, onUnmounted, ref } from "vue";
+import { io } from "socket.io-client";
+
+const socket = useSocketEngine("*");
+
+const subscribeToChannel = (channel) => {
+	socket.emit("subscribe", channel);
+};
+
+onMounted(() => {
+	subscribeToChannel("*");
+
+	socket.onAny(async (eventName, data) => {
+		const channels = await getEventChannels();
+		const eventCount = await getEventCount();
+		channelsCreated.value = channels.data.data.length;
+		eventTriggered.value = eventCount.data.data.count;
+	});
+
+	socket.on('updateClientCount', (clientCount) => {
+		connectedClients.value = clientCount;
+	});
+
+	socket.on("reconnect", () => {
+		console.log("Reconnected to server");
+	});
+});
+
+onUnmounted(() => {
+	socket.offAny();
+	socket.disconnect();
+});
+
+const channelsCreated = ref(0);
+const eventTriggered = ref(0);
+const queueEvent = ref(0);
+const connectedClients = ref(0);
 </script>
 
 <template>
@@ -18,7 +56,7 @@ import {
 				<DollarSign class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">542</div>
+				<div class="text-2xl font-bold">{{ channelsCreated }}</div>
 				<p class="text-xs text-muted-foreground">+20.1% from yesterday</p>
 			</CardContent>
 		</Card>
@@ -30,7 +68,7 @@ import {
 				<Users class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">2,350</div>
+				<div class="text-2xl font-bold">{{ eventTriggered }}</div>
 				<p class="text-xs text-muted-foreground">+180.1% from yesterday</p>
 			</CardContent>
 		</Card>
@@ -42,7 +80,7 @@ import {
 				<CreditCard class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">0</div>
+				<div class="text-2xl font-bold">{{ queueEvent }}</div>
 				<p class="text-xs text-muted-foreground">+19% from last month</p>
 			</CardContent>
 		</Card>
@@ -54,7 +92,7 @@ import {
 				<Activity class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">573</div>
+				<div class="text-2xl font-bold">{{ connectedClients }}</div>
 				<p class="text-xs text-muted-foreground">+201 since last hour</p>
 			</CardContent>
 		</Card>

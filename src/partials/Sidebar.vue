@@ -71,6 +71,7 @@ import {
 	TooltipTrigger,
 	TooltipProvider,
 } from "@/components/ui/tooltip";
+import RedisIndicator from "@/widgets/RedisIndicator.vue";
 
 import { useRoute } from "vue-router";
 import { useNetwork } from "@vueuse/core";
@@ -146,6 +147,19 @@ const isActive = (routeName) => {
 			</TooltipProvider>
 		</nav>
 		<nav class="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
+			<TooltipProvider>
+				<Tooltip>
+					<TooltipTrigger as-child>
+						<a
+							class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8"
+						>
+							<RedisIndicator />
+							<span class="sr-only">Redis Status</span>
+						</a>
+					</TooltipTrigger>
+					<TooltipContent side="right"> Redis Status </TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
 			<TooltipProvider>
 				<Tooltip v-if="!isOnline">
 					<TooltipTrigger as-child>

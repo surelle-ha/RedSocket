@@ -1,6 +1,12 @@
 module.exports = function (app) {
 	const InstallerController = app.controllers.Installer;
 
+	app.get(
+		"/installer/allow",
+		[],
+		InstallerController.allowInstallation
+	);
+
 	app.post(
 		"/installer/migrate",
 		[],

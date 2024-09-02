@@ -22,6 +22,12 @@ module.exports = function (app) {
 		name: "Installer",
 	};
 
+	Controller.allowInstallation = async (req, res) => {
+		const ReqIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+		console.log(ReqIP === app.env.ADMIN_IP)
+		return res.status(200).json({ allowed: ReqIP === app.env.ADMIN_IP });
+	}
+
 	Controller.startMigration = async (req, res) => {
 		try {
             execSync('npm run db:reset', { stdio: 'inherit' });

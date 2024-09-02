@@ -96,3 +96,6 @@
 {"level":50,"time":1725197846587,"pid":131896,"hostname":"Surelle","msg":"[SQL] MySQL Connection Error"}
 {"level":50,"time":1725198307252,"pid":129096,"hostname":"Surelle","msg":"[SQL] MySQL Connection Error"}
 {"level":50,"time":1725198438546,"pid":63328,"hostname":"Surelle","msg":"[SQL] MySQL Connection Error"}
+{"level":50,"time":1725225273487,"pid":125200,"hostname":"Surelle","msg":"[SQL] MySQL Connection Error"}
+{"level":50,"time":1725225366248,"pid":88824,"hostname":"Surelle","msg":"[SQL] MySQL Connection Error"}
+{"level":50,"time":1725238186837,"pid":155864,"hostname":"Surelle","msg":"[SQL] MySQL Connection Error"}

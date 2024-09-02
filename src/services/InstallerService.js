@@ -18,8 +18,16 @@ export const useValidateState = async () => {
                 },
             }
         );
+        const response2 = await axios.get(
+            `${import.meta.env.VITE_BACKEND_API_URL}/installer/allow`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
         return {
-            connection: (response.data.connection === 1) && (response1.data.connection === 1),
+            connection: (response.data.connection === 1) && (response1.data.connection === 1) && response2.data.allowed,
             message: response.data.message || response1.data.message || 'No message provided'
         };
     } catch (error) {
